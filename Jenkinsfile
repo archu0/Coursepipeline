@@ -62,7 +62,7 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                        sh "echo $DOCKER_PASS | docker login -u archu09 -p Archana09*"
+                        sh "docker login -u archu09 -p Archana09* "
                     }
             }
     
