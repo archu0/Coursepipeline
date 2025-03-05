@@ -62,18 +62,14 @@ pipeline {
         }
         stage('Login to Docker Hub') {
             steps {
-                script {
                         sh "echo $DOCKER_PASS | docker login -u archu09 -p Archana09*"
                     }
-                }
             }
     
         
         stage('Push Docker Image') {
             steps {
-                script {
-                    sh "docker push $DOCKER_URL"
-                }
+                    sh "docker push $DOCKER_URL"  
             }
         }
         }
