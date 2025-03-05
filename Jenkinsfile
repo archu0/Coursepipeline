@@ -3,6 +3,10 @@ pipeline {
     tools {
         maven 'maven'
     }
+    environment {
+        DOCKER_URL = 'archu09/workerpipeline'
+
+    }
     stages {
         stage("Pull SRC") {
             steps {
@@ -40,7 +44,7 @@ pipeline {
                             configName: "marcos",
                             transfers: [
                                 sshTransfer(sourceFiles: 'Dockerfile'),
-                                sshTransfer(execCommand: "docker rm -f tomcat; docker rmi marcos; docker build -t marcos .; docker run -it -d -p 8081:8080 --name tomcat marcos")
+                                sshTransfer(execCommand: "docker rm -f tomcat; docker rmi marcos; docker build -t marcos .")
                             ],
                             verbose: true
                         )
@@ -48,5 +52,27 @@ pipeline {
                 )
             }
         }
+         
+        stage('provide tag') {
+            steps {
+                script {
+                    sh "docker tag marcos $DOCKER_URL"
+                }
+            }
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    {
+                        sh "echo $DOCKER_PASS | docker login -u archu09 -p Archana09*"
+                    }
+                }
+            }
     }
+        
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push $DOCKER_URL"
+                }
+            }
 }
