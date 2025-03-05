@@ -59,15 +59,15 @@ pipeline {
                     sh "docker tag marcos $DOCKER_URL"
                 }
             }
+        }
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    {
                         sh "echo $DOCKER_PASS | docker login -u archu09 -p Archana09*"
                     }
                 }
             }
-    }
+    
         
         stage('Push Docker Image') {
             steps {
@@ -75,4 +75,6 @@ pipeline {
                     sh "docker push $DOCKER_URL"
                 }
             }
+        }
+        }
 }
