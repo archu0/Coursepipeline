@@ -3,10 +3,7 @@ pipeline {
     tools {
         maven 'maven'
     }
-    environment {
-        DOCKER_URL = 'archu09/workerpipeline'
-
-    }
+  
     stages {
         stage("Pull SRC") {
             steps {
@@ -53,24 +50,7 @@ pipeline {
             }
         }
          
-        stage('provide tag') {
-            steps {
-                script {
-                    sh "docker tag marcos $DOCKER_URL"
-                }
-            }
-        }
-        stage('Login to Docker Hub') {
-            steps {
-                        sh "docker login -u archu09 -p Archana09* "
-                    }
-            }
-    
+       
         
-        stage('Push Docker Image') {
-            steps {
-                    sh "docker push $DOCKER_URL"  
-            }
-        }
         }
 }
