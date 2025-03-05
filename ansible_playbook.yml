@@ -1,0 +1,19 @@
+---
+- name: Deploy to wrokers
+  hosts: dev
+  user: ansible
+  connection: ssh
+  gather_facts: false
+  become: yes  
+  tasks:
+
+    - name: remove previous image
+      command: docker rmi -f archu09/workerpipeline
+      ignore_errors: yes
+      
+    - name: Stop and remove existing container
+      command: docker rm -f webapp
+      ignore_errors: yes
+
+    - name: Run new container
+      command: docker run -it -d --name webapp -p 8081:8080 archu09/workerpipeline
