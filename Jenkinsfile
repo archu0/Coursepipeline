@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("Pull SRC") {
             steps {
-                git 'https://github.com/shrsyc/instagram-war.git'
+                git 'https://github.com/archu0/Coursepipeline.git'
             }
         }
         stage("Prepare Build") {
@@ -16,14 +16,14 @@ pipeline {
         }
         stage("Copy *.war file to ansible") {
             steps {
-                sh 'mv target/instagram.war .'
+                sh 'mv target/Course.war .'
                 sshPublisher(
                     continueOnError: false, 
                     failOnError: true,
                     publishers: [
                         sshPublisherDesc(
                             configName: "marcos",
-                            transfers: [sshTransfer(sourceFiles: 'instagram.war')],
+                            transfers: [sshTransfer(sourceFiles: 'Course.war')],
                             verbose: true
                         )
                     ]
